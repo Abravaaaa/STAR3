@@ -1,0 +1,59 @@
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starlink Mobile – Download Direto</title>
+<style>
+{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+body{background:000;color:fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center}
+.logo{width:140px;height:140px;background:url('data:image/svg+xml;base64,PHN2ZyB3aWV3Qm94PSIwIDAgMjAwIDIwMCI+PHBhdGggZD0iTTEwMCAyMEwxMjAgODBMMTgwIDgwTDEzNSAxMjBMMTU1IDE4MEwxMDAgMTQ1TDQ1IDE4MEw2NSAxMjBMMjAgODBMODAgODBaIiBmaWxsPSIjMDBkNGZmIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSJub25lIi strokePSIjMDBkNGZmIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDgiLz48L3N2Zz4=') center/contain no-repeat;margin-bottom:20px}
+h1{font-size:24px;margin-bottom:10px;color:00d4ff}
+p{font-size:16px;margin-bottom:25px;color:ccc}
+.btn{background:00d4ff;color:000;border:none;padding:18px 48px;border-radius:30px;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 0 20px 00d4ff;transition:.3s}
+.btn:hover{transform:scale(1.05);box-shadow:0 0 30px 00d4ff}
+.progress{width:80%;height:10px;background:222;border-radius:5px;margin-top:20px;overflow:hidden}
+.bar{height:100%;background:00d4ff;width:0%;transition:width .3s}
+.percent{margin-top:10px;font-size:14px;color:00d4ff}
+</style>
+</head>
+<body>
+<div class="logo"></div>
+<h1>Starlink Mobile</h1>
+<p>Clique abaixo para baixar o APK diretamente. Não saia da página.</p>
+<button class="btn" onclick="startDownload()">BAIXAR AGORA</button>
+
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="percent" id="percent">0%</div>
+
+<script>
+function startDownload(){
+  const btn=document.querySelector('.btn');
+  const bar=document.getElementById('bar');
+  const percent=document.getElementById('percent');
+  btn.disabled=true;
+  btn.innerText='Preparando...';
+
+  // Simula progresso
+  let w=0;
+  const interval=setInterval(()=>{
+    w+=Math.random()6+2;
+    if(w>100)w=100;
+    bar.style.width=w+'%';
+    percent.innerText=Math.floor(w)+'%';
+    if(w===100){
+      clearInterval(interval);
+      // Força download da URL real
+      const a=document.createElement('a');
+      a.href='https://exemplo.com/app.apk'; // <-- URL real aqui
+      a.download='starlink.apk';
+      a.click();
+      btn.innerText='Concluído';
+      percent.innerText='100% – Verifique suas notificações';
+    }
+  },200);
+}
+</script>
+</body>
+</html>
